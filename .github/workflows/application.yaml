@@ -1,0 +1,53 @@
+name: build-and-deploy
+env:
+  REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
+  REPO_NAME: cluster-watch
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # specifies the type of runner to use for the job
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3 # copies source file into the runner
+
+    - name: Build image
+      run: docker build -t cluster-watch-image . # builds a Docker image from the Dockerfile in the current directory
+    
+
+   
+    - name : configure AWS credentials 
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+      role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # specifies the IAM role to assume for AWS access
+      aws-region: eu-west-2 # specifies the AWS region to use for the job
+    
+    
+    - name: Login to ECR
+      uses: aws-actions/amazon-ecr-login@v1 # logs in to Amazon ECR
+
+    - name: Push image to ECR
+
+      run: |
+        docker tag cluster-watch-image ${{ env.REGISTRY }}/${{ env.REPO_NAME }}:v${{ github.run_number }} 
+        docker push ${{ env.REGISTRY }}/${{ env.REPO_NAME }}:v${{ github.run_number }}
+    # pushes the Docker image to the ECR repository
+    
+    - name: scan image for vulnerabilities
+      uses: anchore/scan-action@v3.6.0 # scans the Docker image for vulnerabilities using Anchore
+      with:
+      path: "." # specifies the path to source file to scan
+      fail-build: true # fails the build if vulnerabilities are found
+
+    - name: Update image tag in cluster-watch.yaml
+  run: |
+    sed -i "s|cluster-watch:v[0-9]*|cluster-watch:v${{ github.run_number }}|" kube-objects/cluster-watch.yaml
+    git config user.name "github-actions"
+    git config user.email "github-actions@github.com"
+    git add kube-objects/cluster-watch.yaml
+    git commit -m "chore: update image tag to v${{ github.run_number }}"
+    git push

@@ -1,0 +1,84 @@
+name: infra-pipline 
+
+
+on:
+  push:
+    paths:
+      - 'terraform/**'
+    branches:
+      - main
+on: 
+  pull_request:
+    paths:
+      - 'terraform/**'
+    branches:
+      - main
+jobs: 
+   plan:
+         runs-on: ubuntu-latest 
+         defaults:
+           run:
+             working-directory: ./terraform
+         steps:
+           - name: Checkout code
+             uses: actions/checkout@v3 # first step 
+          
+           - name : configure AWS credentials 
+             uses: aws-actions/configure-aws-credentials@v1
+             with:
+             role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # specifies the IAM role to assume for AWS access
+             aws-region: eu-west-2 # specifies the AWS region to use for the job
+          
+           - name: intialises terraform 
+             run: |
+                terraform init
+                
+           - name: check terraform structure is valide
+             run: |
+                terraform fmt -check
+              
+           - name: check terraform code has no errors
+             run: |
+                terraform validate
+
+           - name: gives a draft of what will be provsioned 
+             run: |
+                terraform plan
+
+           - name: Test with Checkov
+             id: checkov
+             uses: bridgecrewio/checkov-action@master
+             with:
+              directory: ./terraform
+             
+           - name: tfscan 
+             uses: aquasecurity/tfsec-action@v1.0.0
+             with:
+              directory: ./terraform
+
+jobs:
+  apply:
+          runs-on: ubuntu-latest
+          needs: plan
+          environment: production    
+          if : github.event_name == 'push'
+          defaults:
+           run:
+            working-directory: ./terraform
+            steps:
+              - name: Checkout code
+                uses: actions/checkout@v3 # first step 
+          
+              - name : configure AWS credentials 
+                uses: aws-actions/configure-aws-credentials@v1
+                with:
+                role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # specifies the IAM role to assume for AWS access
+                aws-region: eu-west-2 # specifies the AWS region to use for the job
+          
+              - name: intialises terraform 
+                run: |
+                   terraform init
+                   
+              - name: apply terraform code 
+                run: |
+                   terraform apply -auto-approve
