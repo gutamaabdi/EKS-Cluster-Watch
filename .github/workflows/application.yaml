@@ -11,13 +11,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest # specifies the type of runner to use for the job
+    defaults:
+       run:
+         working-directory: ./app
+         
     steps:
     - name: Checkout code
       uses: actions/checkout@v3 # copies source file into the runner
-
+     
     - name: Build image
       run: docker build -t cluster-watch-image . # builds a Docker image from the Dockerfile in the current directory
-    
+     
+     
 
    
     - name : configure AWS credentials 
