@@ -23,8 +23,8 @@ jobs:
     - name : configure AWS credentials 
       uses: aws-actions/configure-aws-credentials@v1
       with:
-      role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # specifies the IAM role to assume for AWS access
-      aws-region: eu-west-2 # specifies the AWS region to use for the job
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # specifies the IAM role to assume for AWS access
+          aws-region: eu-west-2 # specifies the AWS region to use for the job
     
     
     - name: Login to ECR
@@ -40,14 +40,14 @@ jobs:
     - name: scan image for vulnerabilities
       uses: anchore/scan-action@v3.6.0 # scans the Docker image for vulnerabilities using Anchore
       with:
-      path: "." # specifies the path to source file to scan
-      fail-build: true # fails the build if vulnerabilities are found
+       path: "." # specifies the path to source file to scan
+       fail-build: true # fails the build if vulnerabilities are found
 
     - name: Update image tag in cluster-watch.yaml
-  run: |
-    sed -i "s|cluster-watch:v[0-9]*|cluster-watch:v${{ github.run_number }}|" kube-objects/cluster-watch.yaml
-    git config user.name "github-actions"
-    git config user.email "github-actions@github.com"
-    git add kube-objects/cluster-watch.yaml
-    git commit -m "chore: update image tag to v${{ github.run_number }}"
-    git push
+      run: |
+         sed -i "s|cluster-watch:v[0-9]*|cluster-watch:v${{ github.run_number }}|" kube-objects/cluster-watch.yaml
+         git config user.name "github-actions"
+         git config user.email "github-actions@github.com"
+         git add kube-objects/cluster-watch.yaml
+         git commit -m "chore: update image tag to v${{ github.run_number }}"
+         git push
