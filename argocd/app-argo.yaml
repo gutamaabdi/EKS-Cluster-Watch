@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-app # name of the applicaion object 
+  namespace: argocd # namespace where the application object will be created
+spec:
+  project: default  # i think default is fine as were are pulling from one repo 
+  source:
+    repoURL: https://github.com/gutamaabdi/EKS-Cluster-Watch.git # the repo argo cd will watch for changes
+    targetRevision: main # the branch argo cd will watch for changes
+    path: kube-objects # im guess this the path were the application lives in 
+  destination:
+    server: https://kubernetes.default.svc  
+    namespace: my-hub
+     
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

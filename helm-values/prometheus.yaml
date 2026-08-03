@@ -1,0 +1,15 @@
+grafana:
+  ingress:
+    enabled: false
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: "c_issuer"
+    hosts:
+      - host: grafana.gutama-devops-portfolio.link
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: grafana-tls
+        hosts:
+           - grafana.gutama-devops-portfolio.link

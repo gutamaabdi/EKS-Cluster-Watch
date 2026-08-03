@@ -1,0 +1,183 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cluster-watch 
+  namespace: my-watch
+  labels:
+    app: cluster-watch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cluster-watch
+  template:
+    metadata:
+      labels:
+        app: cluster-watch
+    spec:
+    serviceAccountName: cluster-watch-sa
+    securityContext: 
+      runAsNonRoot: true
+      containers:
+        - name: cluster-watch
+          image: 460576937871/dkr.ecr.eu-west-2.amazonaws.com/cluster-watch:v1
+          imagePullPolicy: Always
+          securityContext:
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+              capabilities:
+              drop:
+                - ALL
+              resources:
+                requests:   
+                    cpu: 250m
+                    memory: 70Mi
+                limits:
+                    cpu: 500m 
+                    memory: 140Mi
+            ports:
+              - containerPort: 5000
+
+            livenessProbe:
+                httpGet:
+                path: /health
+                port: 5000
+                initialDelaySeconds: 5
+                periodSeconds: 10
+
+            readinessProbe:
+                httpGet:  
+                path: /health
+                port: 5000
+                initialDelaySeconds: 5
+                periodSeconds: 10
+
+              
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cluster-watch-service
+  namespace: my-watch
+  labels:
+    app: cluster-watch
+spec:
+  selector:
+    app: cluster-watch
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: ClusterIP     
+
+
+---
+apiVersion: v 1
+kind: ServiceAccount
+metadata:
+  name: cluster-watch-sa
+  namespace: my-watch  
+  
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cluster-watch-ingress
+  namespace: my-watch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: app-watch.gutama-devops-portfolio.link
+      http:
+        paths:
+        -path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cluster-watch-service
+            port:
+              number: 80
+  tls:
+   -hosts:
+     - app-watch.egutama-devops-portfolio.link
+      
+      secretName: the-app-watch-tls
+
+---
+  apiVersion: rbac.authorization.k8s.io/v1
+
+  kind: ClusterRole
+  metadata:
+    name: cluster-watch-role
+  rules:
+    - apiGroups: ["apps"]
+      resources: ["deployments"]
+      verbs: ["get", "list"]
+
+---
+
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind : ClusterRoleBinding
+  metadata:
+       name: cluster-watch-rolebinding
+  roleRef:
+       apiGroup: rbac.authorization.k8s.io
+       kind: ClusterRole
+       name: cluster-watch-role
+  subjects:
+        - kind: ServiceAccount
+          name: cluster-watch-sa
+          namespace: my-watch 
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cluster-watch-hpa
+  namespace: my-watch
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cluster-watch
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cluster-watch-network-policy
+  namespace: my-watch
+spec:
+  podSelector:
+    matchLabels:
+      app: cluster-watch
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels: 
+          kubernetes.io/metadata.name: ingress-nginx  
+    -
+    ports:
+    - protocol: TCP
+      port: 5000
+  
+

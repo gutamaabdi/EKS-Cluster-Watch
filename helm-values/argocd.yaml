@@ -1,0 +1,14 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: c_issuer
+    hosts:
+      - argocd.gutama-devops-portfolio.link
+    tls:
+      - secretName: argocd-tls
+        hosts:
+          - argocd.gutama-devops-portfolio.link
+  extraArgs:
+    - --insecure
