@@ -7,7 +7,10 @@ on:
   push:
     branches:
       - main
-
+permissions:
+  id-token: write
+  contents: read
+  
 jobs:
   build:
     runs-on: ubuntu-latest # specifies the type of runner to use for the job
@@ -26,7 +29,7 @@ jobs:
 
    
     - name : configure AWS credentials 
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v4
       with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # specifies the IAM role to assume for AWS access
           aws-region: eu-west-2 # specifies the AWS region to use for the job
