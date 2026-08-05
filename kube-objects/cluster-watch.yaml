@@ -20,7 +20,7 @@ spec:
       runAsNonRoot: true
       containers:
         - name: cluster-watch
-          image: 460576937871/dkr.ecr.eu-west-2.amazonaws.com/cluster-watch:v1
+          image: 460576937871/dkr.ecr.eu-west-2.amazonaws.com/cluster-watch:v12
           imagePullPolicy: Always
           securityContext:
             runAsUser: 1000
