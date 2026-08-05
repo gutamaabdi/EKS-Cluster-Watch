@@ -51,7 +51,8 @@ jobs:
        path: "." # specifies the path to source file to scan
        fail-build: false # fails the build if vulnerabilities are found
 
-    - name: Update image tag in cluster-watch.yaml
+    - name: Update image tag in the application manifest
+      working-directory: .
       run: |
          sed -i "s|cluster-watch:v[0-9]*|cluster-watch:v${{ github.run_number }}|" kube-objects/cluster-watch.yaml
          git config user.name "github-actions"
