@@ -1,7 +1,7 @@
 name: build-and-deploy
 env:
   REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
-  REPO_NAME: cluster-watch
+  REPO_NAME: eks_ecr
 
 on: 
   push:
