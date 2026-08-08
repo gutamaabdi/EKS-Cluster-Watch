@@ -54,7 +54,7 @@ jobs:
     - name: Update image tag in the application manifest
       working-directory: .
       run: |
-         sed -i "s|cluster-watch:v[0-9]*|cluster-watch:v${{ github.run_number }}|" kube-objects/cluster-watch.yaml
+         sed -i "s|eks_ecr:v[0-9]*|eks_ecr:v${{ github.run_number }}|" kube-objects/cluster-watch.yaml
          git config user.name "github-actions"
          git config user.email "github-actions@github.com"
          git add kube-objects/cluster-watch.yaml
