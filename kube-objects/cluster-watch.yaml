@@ -23,7 +23,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: cluster-watch
-          image: 460576937871.dkr.ecr.eu-west-2.amazonaws.com/eks_ecr:v15
+          image: 460576937871.dkr.ecr.eu-west-2.amazonaws.com/eks_ecr:v18
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
