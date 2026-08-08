@@ -97,11 +97,11 @@ spec:
         paths:
           - path: /
             pathType: Prefix
-        backend:
-          service:
-            name: cluster-watch-service
-            port:
-              number: 80
+            backend:
+              service:
+                name: cluster-watch-service
+                port:
+                  number: 80
   tls:
     - hosts:
       - cluster-watch.gutama-devops-portfolio.link
@@ -112,11 +112,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: cluster-watch-role
-spec:
-  rules:
-    - apiGroups: ["apps"]
-      resources: ["deployments"]
-      verbs: ["get", "list"]
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list"]
 
 ---
 
@@ -124,14 +123,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: cluster-watch-rolebinding
-  roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: cluster-watch-role
-  subjects:
-    - kind: ServiceAccount
-      name: cluster-watch-sa
-      namespace: my-watch 
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-watch-role
+subjects:
+  - kind: ServiceAccount
+    name: cluster-watch-sa
+    namespace: my-watch 
 
 ---
 apiVersion: autoscaling/v2
@@ -169,7 +168,7 @@ spec:
     policyTypes:
       - Ingress
     ingress:
-      from:
+     - from:
         - namespaceSelector:
             matchLabels: 
               kubernetes.io/metadata.name: ingress-nginx 
