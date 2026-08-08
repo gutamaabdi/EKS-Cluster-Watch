@@ -112,7 +112,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: cluster-watch-role
-spcec:
+spec:
   rules:
     - apiGroups: ["apps"]
       resources: ["deployments"]
@@ -163,7 +163,7 @@ metadata:
   name: cluster-watch-network-policy
   namespace: my-watch
 spec:
-  - podSelector:
+    podSelector:
       matchLabels:
         app: cluster-watch
     policyTypes:

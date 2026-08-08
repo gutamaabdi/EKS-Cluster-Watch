@@ -11,7 +11,7 @@ spec:
     path: kube-objects # im guess this the path were the application lives in 
   destination:
     server: https://kubernetes.default.svc  
-    namespace: my-hub
+    namespace: my-watch
      
   syncPolicy:
     automated:
