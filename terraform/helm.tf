@@ -4,7 +4,14 @@ resource "helm_release" "nginx_ingress" {
   chart      = "ingress-nginx"
   create_namespace = true
   namespace = "nginx-ingress"
-}
+    
+    set = [
+    {
+      name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme"
+      value = "internet-facing"
+    }
+  ]
+} 
 
 resource "helm_release" "argocd" { 
   name       = "argo-helm"
