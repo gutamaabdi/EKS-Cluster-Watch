@@ -9,15 +9,15 @@ spec:
     privateKeySecretRef:
       name: issuer-account-key
 
-  solvers:  
-    -selector: 
-        dnsZones:
+    solvers:  
+      - selector: 
+          dnsZones:
           - gutama-devops-portfolio.link  
-    dns01:
-        route53: 
-          region: "eu-west-2"
-          hostedZoneID: Z05754382YX5S7UZ7PFIP
+        dns01:
+          route53: 
+            region: "eu-west-2"
+            hostedZoneID: Z05754382YX5S7UZ7PFIP
 
-    -http01:
-        ingress:
-          ingressClassName: nginx
+      - http01:
+          ingress:
+            ingressClassName: nginx
