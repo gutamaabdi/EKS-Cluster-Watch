@@ -3,7 +3,7 @@ grafana:
     enabled: false
     className: "nginx"
     annotations:
-      cert-manager.io/cluster-issuer: "c_issuer"
+      cert-manager.io/cluster-issuer: "issuer"
     hosts:
       - host: grafana.gutama-devops-portfolio.link
         paths:

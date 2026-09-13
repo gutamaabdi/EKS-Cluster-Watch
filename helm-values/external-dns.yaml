@@ -10,3 +10,5 @@ domainFilters:
    - gutama-devops-portfolio.link
   
 txtOwnerId: "cluster-watch"
+
+policy: upsert-only
