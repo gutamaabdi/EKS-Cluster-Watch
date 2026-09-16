@@ -42,7 +42,7 @@ def home():
         "name": "ArgoCD",
         "description": "GitOps continuous deployment",
         "status": get_deployment_status("argocd", "argo-cd-argocd-server"),
-        "url": "https://argocd.eiddev.xyz",
+        "url": "https://argocd.gutama-devops-portfolio.link",
     },
     {
         "name": "Prometheus",
@@ -54,7 +54,7 @@ def home():
         "name": "Grafana",
         "description": "Metrics visualisation and dashboards",
         "status": get_deployment_status("monitoring", "kube-prometheus-stack-grafana"),
-        "url": "https://grafana.eiddev.xyz",
+        "url": "https://grafana.gutama-devops-portfolio.link",
     },
 ]
 

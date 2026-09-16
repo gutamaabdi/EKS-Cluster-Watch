@@ -1,14 +1,11 @@
 grafana:
   ingress:
-    enabled: false
-    className: "nginx"
+    enabled: true
+    ingressClassName: nginx
     annotations:
       cert-manager.io/cluster-issuer: "issuer"
     hosts:
-      - host: grafana.gutama-devops-portfolio.link
-        paths:
-          - path: /
-            pathType: Prefix
+      - grafana.gutama-devops-portfolio.link
     tls:
       - secretName: grafana-tls
         hosts:
