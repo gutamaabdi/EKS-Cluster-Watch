@@ -148,12 +148,12 @@ spec:
   minReplicas: 1
   maxReplicas: 3
   metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 60
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
 
 
 ---
@@ -175,8 +175,8 @@ spec:
             matchLabels: 
               kubernetes.io/metadata.name: ingress-nginx 
 
-    ports:
-      - protocol: TCP
-        port: 5000
+       ports:
+       - protocol: TCP
+         port: 5000
   
 

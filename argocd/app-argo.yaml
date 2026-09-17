@@ -12,7 +12,6 @@ spec:
   destination:
     server: https://kubernetes.default.svc  
     namespace: my-watch
-     
   syncPolicy:
     automated:
       prune: true
