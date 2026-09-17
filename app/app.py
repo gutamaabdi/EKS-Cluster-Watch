@@ -41,7 +41,7 @@ def home():
     {
         "name": "ArgoCD",
         "description": "GitOps continuous deployment",
-        "status": get_deployment_status("argocd", "argo-helm-argocd-server "),
+        "status": get_deployment_status("argocd", "argo-helm-argocd-server"),
         "url": "https://argocd.gutama-devops-portfolio.link",
     },
     {
