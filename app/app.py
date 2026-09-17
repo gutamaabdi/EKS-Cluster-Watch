@@ -23,7 +23,7 @@ def home():
     {
         "name": "NGINX Ingress Controller",
         "description": "Traffic routing and load balancing",
-        "status": get_deployment_status("ingress-nginx", "ingress-nginx-controller"),
+        "status": get_deployment_status("nginx-ingress", "nginx-ingress-controller-ingress-nginx-controller"),
         "url": None,
     },
     {
@@ -41,19 +41,19 @@ def home():
     {
         "name": "ArgoCD",
         "description": "GitOps continuous deployment",
-        "status": get_deployment_status("argocd", "argo-cd-argocd-server"),
+        "status": get_deployment_status("argocd", "argo-helm-argocd-server "),
         "url": "https://argocd.gutama-devops-portfolio.link",
     },
     {
         "name": "Prometheus",
         "description": "Cluster metrics collection",
-        "status": get_deployment_status("monitoring", "kube-prometheus-stack-operator"),
+        "status": get_deployment_status("monitoring", "prometheus-community-kube-operator"),
         "url": None,
     },
     {
         "name": "Grafana",
         "description": "Metrics visualisation and dashboards",
-        "status": get_deployment_status("monitoring", "kube-prometheus-stack-grafana"),
+        "status": get_deployment_status("monitoring", "prometheus-community-grafana"),
         "url": "https://grafana.gutama-devops-portfolio.link",
     },
 ]
