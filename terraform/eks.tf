@@ -6,7 +6,7 @@ module "eks" {
   kubernetes_version = var.kubernetes_version
 
   # Optional
-  endpoint_public_access = true 
+  endpoint_public_access = true
 
   # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
