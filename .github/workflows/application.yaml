@@ -3,10 +3,12 @@ env:
   REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
   REPO_NAME: eks_ecr
 
-on: 
+on:
   push:
     branches:
       - main
+    paths:
+      - 'app/**'
 permissions:
   id-token: write
   contents: write
