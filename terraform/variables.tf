@@ -6,13 +6,13 @@ variable "cluster_name" {
 variable "aws_region" {
   type        = string
   description = "the aws region"
-  default     = "eu-west-2" 
+  default     = "eu-west-2"
 }
 
 variable "private_sub" {
   type        = list(string)
   description = "this is the private subnets"
-  default     = ["10.0.1.0/24", "10.0.2.0/24" , "10.0.3.0/24"]
+  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
 variable "public_sub" {
@@ -53,8 +53,8 @@ variable "c_repo" {
 }
 
 variable "domain" {
-  type = string
+  type        = string
   description = "Root domain managed in Route 53"
-  default = "gutama-devops-portfolio.link"
+  default     = "gutama-devops-portfolio.link"
 }
 

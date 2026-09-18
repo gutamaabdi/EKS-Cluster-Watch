@@ -1,23 +1,23 @@
 module "eks" {
-  source  = "terraform-aws-modules/eks/aws" 
-  version = "~> 21.0"  
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 21.0"
 
-  name               = var.cluster_name 
-  kubernetes_version = var.kubernetes_version 
+  name               = var.cluster_name
+  kubernetes_version = var.kubernetes_version
 
   # Optional
   endpoint_public_access = true //not sure what this does
 
   # Optional: Adds the current caller identity as an administrator via cluster access entry
-  enable_cluster_creator_admin_permissions = true 
+  enable_cluster_creator_admin_permissions = true
 
-  compute_config = { 
+  compute_config = {
     enabled    = true
     node_pools = ["general-purpose"]
   }
 
-  vpc_id     = module.vpc.vpc_id 
-  subnet_ids = module.vpc.private_subnets 
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 
 
 }
