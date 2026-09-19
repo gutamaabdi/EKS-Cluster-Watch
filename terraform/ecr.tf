@@ -1,5 +1,7 @@
 module "ecr" {
   source = "terraform-aws-modules/ecr/aws"
+  version = "~> 3.1.1"
+
 
   repository_name = var.c_repo
 
@@ -12,9 +14,9 @@ module "ecr" {
         selection = {
           tagStatus     = "tagged",
           tagPrefixList = ["v"],
-          countType     = "imageCountMoreThan",
+          countType     = "imageCountMoreThan", 
           countNumber   = 30
-        },
+        }
         action = {
           type = "expire"
         }
