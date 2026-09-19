@@ -15,8 +15,8 @@ module "eks" {
   enable_cluster_creator_admin_permissions = true
 
   encryption_config = {
-  resources = ["secrets"]
-}
+    resources = ["secrets"]
+  }
 
   compute_config = {
     enabled    = true
