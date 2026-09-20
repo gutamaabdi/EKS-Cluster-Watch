@@ -12,6 +12,29 @@ This project was built to demonstrate platform engineering, not just application
 
 
 
+
+## Deployed Apps
+
+- **ArgoCD** — `argocd.gutama-devops-portfolio.link)`
+- **eks-cluster-watch** — `cluster-watch.gutama-devops-portfolio.link`
+- **Grafana** — `grafana.gutama-devops-portfolio.link`
+
+### EKS Cluster watch
+<img width="1680" height="1050" alt="Screenshot 2026-09-17 at 18 38 57" src="https://github.com/user-attachments/assets/f69c7818-7bce-476c-a821-e7fa6eeb2ac4" />
+
+### ArgoCD
+<img width="1680" height="1050" alt="Screenshot 2026-09-17 at 20 26 09" src="https://github.com/user-attachments/assets/73e5b424-a7d1-4819-b5b2-2bbe0c84ce42" />
+
+### Grafana
+<img width="1680" height="1050" alt="Screenshot 2026-09-17 at 20 31 15" src="https://github.com/user-attachments/assets/c25ffac1-e0af-4f9e-8620-744b9549d53d" />
+
+### EKS Status Hub — Degraded State
+<img width="1680" height="1050" alt="Screenshot 2026-08-08 at 18 13 25" src="https://github.com/user-attachments/assets/858b5fba-edd8-48f6-8eb2-6ecb2cbae26d" />
+
+
+
+
+
 - **VPC**: Multi-AZ (3 AZs), public/private subnet segmentation
 - **Worker nodes**: Private subnets, no public IPs
 - **Ingress**: NGINX Ingress Controller behind an internet-facing NLB
