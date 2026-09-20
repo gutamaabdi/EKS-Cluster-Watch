@@ -56,6 +56,7 @@ resource "helm_release" "prometheus" {
   chart            = "kube-prometheus-stack"
   create_namespace = true
   namespace        = "monitoring"
+  depends_on       = [helm_release.nginx_ingress]
   values           = [file("${path.module}/../helm-values/prometheus.yaml")]
 
 }
