@@ -6,4 +6,4 @@ locals {
   }
 
 
-} # trigger infra pipeline tests1
+} # trigger infra pipeline tests
