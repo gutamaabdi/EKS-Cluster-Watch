@@ -15,7 +15,7 @@ This project was built to demonstrate platform engineering, not just application
 
 ## Deployed Apps
 
-- **ArgoCD** — `argocd.gutama-devops-portfolio.link)`
+- **ArgoCD** — `argocd.gutama-devops-portfolio.link`
 - **eks-cluster-watch** — `cluster-watch.gutama-devops-portfolio.link`
 - **Grafana** — `grafana.gutama-devops-portfolio.link`
 
